@@ -5,6 +5,8 @@ import Records from './components/Records';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import CartPage from './components/CartPage';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [cart,setCart]=useState([]);
@@ -17,11 +19,15 @@ function App() {
         item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
       );
     }
-    return [...prevCart, { ...product, quantity: 1 }];
+   else {
+      toast.success("Added to cart");
+      return [...prevCart, { ...product, quantity: 1 }];
+    }
   });
 };
 
 const increaseQty = (productId) => {
+  toast.info("Quantity added");
   setCart(prevCart =>
     prevCart.map(item =>
       item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
@@ -30,6 +36,7 @@ const increaseQty = (productId) => {
 };
 
 const decreaseQty = (productId) => {
+  toast.info("Quantity deleted");
   setCart(prevCart =>
     prevCart
       .map(item =>
@@ -41,6 +48,7 @@ const decreaseQty = (productId) => {
 };
 
 const removeFromCart = (productId) => {
+  toast.error("Removed from cart");
   setCart(prevCart => prevCart.filter(item => item.id !== productId));
 };
 
@@ -51,7 +59,7 @@ const removeFromCart = (productId) => {
       <Route path='/' element={<Records addToCart={addToCart}/>}/>
       <Route path='/cart' element={<CartPage cart={cart} increaseQty={increaseQty} decreaseQty={decreaseQty} removeFromCart={removeFromCart}/>}/>
      </Routes>
-     
+     <ToastContainer position="top-right" autoClose={2000} />
     </BrowserRouter>
   );
 }
