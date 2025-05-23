@@ -15,6 +15,7 @@ import {
 import { NavLink } from 'react-router';
 
 const CartPage = ({ cart = [], increaseQty, decreaseQty, removeFromCart }) => {
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     return (
         <>
             <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
@@ -110,9 +111,9 @@ const CartPage = ({ cart = [], increaseQty, decreaseQty, removeFromCart }) => {
 
                                                 <div className="d-flex justify-content-between mb-4">
                                                     <MDBTypography tag="h5" className="text-uppercase">
-                                                        items 3
+                                                        Total items
                                                     </MDBTypography>
-                                                    <MDBTypography tag="h5">€ 132.00</MDBTypography>
+                                                    <MDBTypography tag="h5">{cart.length}</MDBTypography>
                                                 </div>
 
                                                 <MDBTypography tag="h5" className="text-uppercase mb-3">
@@ -142,7 +143,7 @@ const CartPage = ({ cart = [], increaseQty, decreaseQty, removeFromCart }) => {
                                                     <MDBTypography tag="h5" className="text-uppercase">
                                                         Total price
                                                     </MDBTypography>
-                                                    <MDBTypography tag="h5">€ 137.00</MDBTypography>
+                                                    <MDBTypography tag="h5">€ {total.toFixed(2)}</MDBTypography>
                                                 </div>
 
                                                 <MDBBtn color="dark" block size="lg">
