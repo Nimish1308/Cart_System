@@ -48,6 +48,7 @@ const Records = ({addToCart}) => {
                                         This is a longer card with supporting text below as a natural lead-in to additional content.
                                         This content is a little bit longer.
                                     </MDBCardText>
+                                    <MDBCardTitle>{item.price}</MDBCardTitle>
                                     <Button variant="success" onClick={()=>addToCart(item)}>ADD TO CART</Button>
                                 </MDBCardBody>
                             </MDBCard>

@@ -4,12 +4,21 @@ import NaviBar from './components/NaviBar';
 import Records from './components/Records';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import CartPage from './components/CartPage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+  try {
+    const saved = localStorage.getItem('cart');
+    return saved ? JSON.parse(saved) : [];
+  } catch (e) {
+    return [];
+  }
+});
+
+
 
   const addToCart = (product) => {
     setCart(prevCart => {
@@ -52,7 +61,10 @@ function App() {
     setCart(prevCart => prevCart.filter(item => item.id !== productId));
   };
 
- 
+ useEffect(() => {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}, [cart]);
+
   return (
     <BrowserRouter>
       <NaviBar cart={cart} />
