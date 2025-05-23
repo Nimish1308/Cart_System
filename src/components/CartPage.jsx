@@ -14,7 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import { NavLink } from 'react-router';
 
-const CartPage = ({ cart = [], increaseQty, decreaseQty }) => {
+const CartPage = ({ cart = [], increaseQty, decreaseQty, removeFromCart }) => {
     return (
         <>
             <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
@@ -56,13 +56,13 @@ const CartPage = ({ cart = [], increaseQty, decreaseQty }) => {
                                                                 </MDBCol>
                                                                 <MDBCol md="3" lg="3" xl="3" className="d-flex align-items-center">
                                                                     <MDBBtn color="link" className="px-2">
-                                                                        <MDBIcon fas icon="minus" onClick={() => decreaseQty(item.id)}/>
+                                                                        <MDBIcon fas icon="minus" onClick={() => decreaseQty(item.id)} />
                                                                     </MDBBtn>
 
-                                                                    <MDBInput type="number" min="0"  size="sm">{item.quantity}</MDBInput>
+                                                                    <MDBInput type="number" min="0" size="sm">{item.quantity}</MDBInput>
 
                                                                     <MDBBtn color="link" className="px-2">
-                                                                        <MDBIcon fas icon="plus" onClick={() => increaseQty(item.id)}/>
+                                                                        <MDBIcon fas icon="plus" onClick={() => increaseQty(item.id)} />
                                                                     </MDBBtn>
                                                                 </MDBCol>
                                                                 <MDBCol md="3" lg="2" xl="2" className="text-end">
@@ -72,7 +72,7 @@ const CartPage = ({ cart = [], increaseQty, decreaseQty }) => {
                                                                 </MDBCol>
                                                                 <MDBCol md="1" lg="1" xl="1" className="text-end">
                                                                     <a href="#!" className="text-muted">
-                                                                        <MDBIcon fas icon="times" />
+                                                                        <MDBIcon fas icon="times" onClick={() => removeFromCart(item.id)}/>
                                                                     </a>
                                                                 </MDBCol>
                                                             </MDBRow>
@@ -98,6 +98,8 @@ const CartPage = ({ cart = [], increaseQty, decreaseQty }) => {
                                                 </div>
                                             </div>
                                         </MDBCol>
+
+
                                         <MDBCol lg="4" className="bg-grey">
                                             <div className="p-5">
                                                 <MDBTypography tag="h3" className="fw-bold mb-5 mt-2 pt-1">

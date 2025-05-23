@@ -37,6 +37,11 @@ const decreaseQty = (productId) => {
       )
       .filter(item => item.quantity > 0) // remove if qty goes to 0
   );
+
+};
+
+const removeFromCart = (productId) => {
+  setCart(prevCart => prevCart.filter(item => item.id !== productId));
 };
 
   return (
@@ -44,7 +49,7 @@ const decreaseQty = (productId) => {
      <NaviBar cart={cart} />
      <Routes>
       <Route path='/' element={<Records addToCart={addToCart}/>}/>
-      <Route path='/cart' element={<CartPage cart={cart} increaseQty={increaseQty} decreaseQty={decreaseQty}/>}/>
+      <Route path='/cart' element={<CartPage cart={cart} increaseQty={increaseQty} decreaseQty={decreaseQty} removeFromCart={removeFromCart}/>}/>
      </Routes>
      
     </BrowserRouter>
