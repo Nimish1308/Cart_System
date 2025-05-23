@@ -9,15 +9,42 @@ import { useState } from 'react';
 function App() {
   const [cart,setCart]=useState([]);
 
-  const addToCart=(product)=>{
-   setCart([...cart,product])
-  }
+ const addToCart = (product) => {
+  setCart(prevCart => {
+    const existing = prevCart.find(item => item.id === product.id);
+    if (existing) {
+      return prevCart.map(item =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+    }
+    return [...prevCart, { ...product, quantity: 1 }];
+  });
+};
+
+const increaseQty = (productId) => {
+  setCart(prevCart =>
+    prevCart.map(item =>
+      item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+    )
+  );
+};
+
+const decreaseQty = (productId) => {
+  setCart(prevCart =>
+    prevCart
+      .map(item =>
+        item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+      )
+      .filter(item => item.quantity > 0) // remove if qty goes to 0
+  );
+};
+
   return (
     <BrowserRouter>
-     <NaviBar cart={cart}/>
+     <NaviBar cart={cart} />
      <Routes>
       <Route path='/' element={<Records addToCart={addToCart}/>}/>
-      <Route path='/cart' element={<CartPage cart={cart}/>}/>
+      <Route path='/cart' element={<CartPage cart={cart} increaseQty={increaseQty} decreaseQty={decreaseQty}/>}/>
      </Routes>
      
     </BrowserRouter>

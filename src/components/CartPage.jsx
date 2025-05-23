@@ -14,7 +14,7 @@ import {
 } from "mdb-react-ui-kit";
 import { NavLink } from 'react-router';
 
-const CartPage = ({ cart }) => {
+const CartPage = ({ cart = [], increaseQty, decreaseQty }) => {
     return (
         <>
             <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
@@ -39,8 +39,8 @@ const CartPage = ({ cart }) => {
 
                                                 {
                                                     cart.length === 0 ? (<><p>Cart is empty</p></>) : (
-                                                        cart.map((item, i) => (
-                                                            <MDBRow className="mb-4 d-flex justify-content-between align-items-center" key={i}>
+                                                        cart.map((item) => (
+                                                            <MDBRow className="mb-4 d-flex justify-content-between align-items-center" key={item.id}>
                                                                 <MDBCol md="2" lg="2" xl="2">
                                                                     <MDBCardImage
                                                                         src={item.image}
@@ -56,13 +56,13 @@ const CartPage = ({ cart }) => {
                                                                 </MDBCol>
                                                                 <MDBCol md="3" lg="3" xl="3" className="d-flex align-items-center">
                                                                     <MDBBtn color="link" className="px-2">
-                                                                        <MDBIcon fas icon="minus" />
+                                                                        <MDBIcon fas icon="minus" onClick={() => decreaseQty(item.id)}/>
                                                                     </MDBBtn>
 
-                                                                    <MDBInput type="number" min="0" defaultValue={1} size="sm" />
+                                                                    <MDBInput type="number" min="0"  size="sm">{item.quantity}</MDBInput>
 
                                                                     <MDBBtn color="link" className="px-2">
-                                                                        <MDBIcon fas icon="plus" />
+                                                                        <MDBIcon fas icon="plus" onClick={() => increaseQty(item.id)}/>
                                                                     </MDBBtn>
                                                                 </MDBCol>
                                                                 <MDBCol md="3" lg="2" xl="2" className="text-end">
